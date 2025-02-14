@@ -1,4 +1,9 @@
-const Homepage = () => {
+import { currentUser } from "@/services/AuthService";
+
+const Homepage = async () => {
+  const user = await currentUser()
+  console.log(user);
+  
   return (
     <div className=" mt-20 px-16">
       <button className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-opacity-80 transition">
