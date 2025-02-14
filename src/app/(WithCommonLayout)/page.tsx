@@ -1,8 +1,7 @@
-import { currentUser } from "@/services/AuthService";
 
 const Homepage = async () => {
-  const user = await currentUser()
-  console.log(user);
+ 
+  // console.log(user);
   
   return (
     <div className=" mt-20 px-16">
