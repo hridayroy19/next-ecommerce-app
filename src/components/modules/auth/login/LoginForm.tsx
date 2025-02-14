@@ -1,4 +1,5 @@
 "use client";
+import ReCAPTCHA from "react-google-recaptcha";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,23 +13,41 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Image from "next/image";
-import { loginUser } from "@/services/AuthService";
+import { loginUser, reCaptchaTokenVerification } from "@/services/AuthService";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 import Link from "next/link";
+import { useState } from "react";
 
 const LoginForm = () => {
   const form = useForm({
     resolver: zodResolver(loginSchema),
   });
-    
-  const {formState:{isSubmitting}} = form
+  const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
+  const {
+    formState: { isSubmitting },
+  } = form;
+
+
+
+  const handleReCaptcha = async (value: string | null) => {
+    try {
+      const res = await reCaptchaTokenVerification(value!);
+      console.log(res);
+      
+      if (res?.success) {
+        setReCaptchaStatus(true);
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await loginUser(data);
       console.log(res);
-      
+
       if (res?.success) {
         toast.success(res?.message);
       } else {
@@ -80,10 +99,12 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <Button
-            className="mt-5 w-full"
-            type="submit"
-          >
+
+          <div className=" w-full  mt-4 justify-center flex">
+            <ReCAPTCHA onChange={handleReCaptcha} sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY}`}  />
+          </div>
+
+          <Button disabled={reCaptchaStatus? false : true} className="mt-5 w-full" type="submit">
             {isSubmitting ? "Login...." : "Login"}
           </Button>
         </form>
@@ -94,7 +115,7 @@ const LoginForm = () => {
           Register
         </Link>
       </p>
-        <p/>
+      <p />
     </div>
   );
 };
