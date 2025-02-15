@@ -111,7 +111,7 @@ const LoginForm = () => {
           />
 
           <div className=" w-full  mt-4 justify-center flex">
-            <ReCAPTCHA onChange={handleReCaptcha} sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY}`}  />
+            <ReCAPTCHA onChange={handleReCaptcha} sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY!}`}  />
           </div>
 
           <Button disabled={reCaptchaStatus? false : true} className="mt-5 w-full" type="submit">

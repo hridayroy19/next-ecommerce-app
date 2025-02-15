@@ -15,13 +15,21 @@ import {
 import { logout } from "@/services/AuthService";
 import { useUser } from "@/context/UserContext";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { protectedRoutes } from "@/contants";
 
 export default function Navbar() {
   const { user, setIsLoading } = useUser();
 
+  const pathname = usePathname();
+  const router = useRouter();
+
   const handleLogut = () => {
     logout();
     setIsLoading(true);
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
   };
   return (
     <header className="border-b w-full">
