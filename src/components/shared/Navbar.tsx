@@ -53,7 +53,11 @@ export default function Navbar() {
           </Button>
           {user ? (
             <>
-              <Link href="/create-shop"><Button className="rounded-full px-2 size-18">Creat Shop</Button></Link>
+              <Link href="/create-shop">
+                <Button className="rounded-full px-2 size-18">
+                  Creat Shop
+                </Button>
+              </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar>
@@ -65,10 +69,16 @@ export default function Navbar() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <Link href="user/dashboard">
+                    {" "}
+                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem>My Shop</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-red-600" onClick={handleLogut}>
+                  <DropdownMenuItem
+                    className="text-red-600"
+                    onClick={handleLogut}
+                  >
                     <LogOut />
                     <span>LogOut</span>
                   </DropdownMenuItem>
