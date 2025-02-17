@@ -1,25 +1,23 @@
 "use client";
-import { ICategory } from "@/types";
-import CreateCatagoryModal from "./CreateCatagoryModal";
-import { NETable } from "@/components/ui/core/NEtabil";
+
 import { ColumnDef } from "@tanstack/react-table";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { deleteCategory } from "@/services/Category";
+import CreateBrandModal from "./CreateBrandModal";
 import { toast } from "sonner";
+
+import { deleteBrand } from "@/services/Brand";
 import DeleteConfirmationModal from "@/components/ui/core/NEModal/DeleteConfirmationModal";
+import { NETable } from "@/components/ui/core/NEtabil";
+import { IBrand } from "@/types";
 
-type TcatagorisProps = {
-  catagoris: ICategory[];
-};
-
-const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
+const ManageBrands = ({ brands }: { brands: IBrand[] }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
-  const handleDelete = (data: ICategory) => {
+  const handleDelete = (data: IBrand) => {
     console.log(data);
     setSelectedId(data?._id);
     setSelectedItem(data?.name);
@@ -29,7 +27,7 @@ const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
   const handleDeleteConfirm = async () => {
     try {
       if (selectedId) {
-        const res = await deleteCategory(selectedId);
+        const res = await deleteBrand(selectedId);
         console.log(res);
         if (res.success) {
           toast.success(res.message);
@@ -43,18 +41,18 @@ const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
     }
   };
 
-  const columns: ColumnDef<ICategory>[] = [
+  const columns: ColumnDef<IBrand>[] = [
     {
       accessorKey: "name",
-      header: () => <div className="font-bold">Category Name</div>,
+      header: () => <div>Brand Name</div>,
       cell: ({ row }) => (
         <div className="flex items-center space-x-3">
           <Image
-            src={row.original.icon}
+            src={row.original.logo}
             alt={row.original.name}
             width={40}
             height={40}
-            className="w-10 h-10 rounded-full"
+            className="w-8 h-8 rounded-full"
           />
           <span className="truncate">{row.original.name}</span>
         </div>
@@ -62,7 +60,7 @@ const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
     },
     {
       accessorKey: "isActive",
-      header: () => <div className="font-bold">isActive</div>,
+      header: () => <div>isActive</div>,
       cell: ({ row }) => (
         <div>
           {row.original.isActive ? (
@@ -79,7 +77,7 @@ const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
     },
     {
       accessorKey: "action",
-      header: () => <div className="font-bold">Action</div>,
+      header: () => <div>Action</div>,
       cell: ({ row }) => (
         <button
           className="text-red-500"
@@ -92,14 +90,15 @@ const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
     },
   ];
 
-  console.log(catagoris);
   return (
     <div>
-      <div className=" flex shadow-md mb-4 p-4 justify-between items-center">
-        <h1 className="text-xl font-bold">Manage Catagories</h1>
-        <CreateCatagoryModal />
+      <div className="flex items-center mb-4 justify-between">
+        <h1 className="text-xl font-bold">Manage Brands</h1>
+
+        <CreateBrandModal />
       </div>
-      <NETable data={catagoris} columns={columns} />
+      <NETable columns={columns} data={brands || []} />
+
       <DeleteConfirmationModal
         name={selectedItem}
         isOpen={isModalOpen}
@@ -110,4 +109,4 @@ const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
   );
 };
 
-export default ManageCatagories;
+export default ManageBrands;
