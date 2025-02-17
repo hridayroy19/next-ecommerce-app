@@ -1,9 +1,13 @@
 import ManageCatagories from "@/components/modules/shop/category";
+import { GetAllCategory } from "@/services/Category";
 
-const ProductCatagory = () => {
+const ProductCatagory = async() => {
+    
+ const {data} = await GetAllCategory()
+
     return (
         <div>
-           <ManageCatagories/>
+           <ManageCatagories catagoris={data}/>
         </div>
     );
 };
