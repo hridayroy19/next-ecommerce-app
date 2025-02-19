@@ -7,6 +7,9 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { NETable } from "@/components/ui/core/NEtabil";
 import { IProduct } from "@/types";
+import { deleteProduct } from "@/services/Product";
+import { toast } from "sonner";
+// import { toast } from "sonner";
 
 const ManageProducts = ({ products }: { products: IProduct[] }) => {
   const router = useRouter();
@@ -15,9 +18,26 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
     console.log("Viewing product:", product);
   };
 
-  const handleDelete = (productId: string) => {
-    console.log("Deleting product with ID:", productId);
+  const handleDelete = async (_id: string) => {
+    try {
+      if (_id) {
+        const res = await deleteProduct(_id);
+        console.log(res);
+        if (res.success) {
+          toast.success(res.message);
+        } else {
+          toast.error(res.message);
+        }
+      }
+    } catch (err: any) {
+      console.error(err?.message);
+    }
   };
+
+
+
+
+
 
   const columns: ColumnDef<IProduct>[] = [
     {
