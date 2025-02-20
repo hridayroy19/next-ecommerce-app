@@ -4,6 +4,8 @@ import { getAllProducts } from "@/services/Product";
 import { IProduct } from "@/types";
 import Link from "next/link";
 
+
+
 const FeaturedProducts = async () => {
   const { data: products } = await getAllProducts();
 
