@@ -9,11 +9,16 @@ import { NETable } from "@/components/ui/core/NEtabil";
 import { IProduct } from "@/types";
 import { deleteProduct } from "@/services/Product";
 import { toast } from "sonner";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import DiscountModal from "./DiscountModals";
+
 // import { toast } from "sonner";
 
 const ManageProducts = ({ products }: { products: IProduct[] }) => {
   const router = useRouter();
-
+  const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
+  console.log(selectedIds);
   const handleView = (product: IProduct) => {
     console.log("Viewing product:", product);
   };
@@ -34,12 +39,38 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
     }
   };
 
-
-
-
-
-
   const columns: ColumnDef<IProduct>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            if (value) {
+              setSelectedIds((prev) => [...prev, row.original._id]);
+            } else {
+              setSelectedIds(
+                selectedIds.filter((id) => id !== row.original._id)
+              );
+            }
+            row.toggleSelected(!!value);
+          }}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
     {
       accessorKey: "name",
       header: "Product Name",
@@ -133,6 +164,10 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
           >
             Add Product <Plus />
           </Button>
+          <DiscountModal
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
+          />
         </div>
       </div>
       <NETable columns={columns} data={products || []} />
