@@ -21,9 +21,9 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
           <Image
             src={product?.imageUrls[0]}
             alt="product image"
-            width={500}
-            height={500}
-            className="rounded-md w-full object-cover h-80"
+            width={400}
+            height={300}
+            className="rounded-md lg:w-[58%] w-full mx-auto object-cover h-80 "
           />
           <div className="grid grid-cols-3 gap-4 mt-5">
             {product?.imageUrls
@@ -127,9 +127,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
             <Button variant="outline" className="w-full">
               Add To Cart
             </Button>
-            <Button className="w-full text-white">
-              Buy Now
-            </Button>
+            <Button className="w-full text-white">Buy Now</Button>
           </div>
         </div>
       </div>
