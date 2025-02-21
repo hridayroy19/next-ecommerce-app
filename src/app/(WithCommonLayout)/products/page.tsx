@@ -1,11 +1,13 @@
+import AllProducts from "@/components/modules/products";
 import ProductBanner from "@/components/modules/products/banner";
 import CategoryCard from "@/components/ui/core/CategoryCard";
 import { GetAllCategory } from "@/services/Category";
+import { getAllProducts } from "@/services/Product";
 import { ICategory } from "@/types";
 
 const AllProductsPage = async () => {
   const { data: categories } = await GetAllCategory();
-
+  const { data: products } = await getAllProducts();
   return (
     <div className="my-10 container mx-auto">
       <ProductBanner title="All Products" path="Home - Products" />
@@ -15,6 +17,7 @@ const AllProductsPage = async () => {
           <CategoryCard key={idx} category={category} />
         ))}
       </div>
+       <AllProducts products={products}/>
     </div>
   );
 };
