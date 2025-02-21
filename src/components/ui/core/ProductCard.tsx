@@ -39,7 +39,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         <Link href={`/products/${product?._id}`} passHref>
           <CardTitle
             title={product?.name}
-            className="font-semibold cursor-pointer text-sm"
+            className="font-semibold hover:underline cursor-pointer text-sm"
           >
             {product?.name.length > 30
               ? product?.name?.slice(0, 30) + "..."
