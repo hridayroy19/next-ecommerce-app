@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function CartProductCard({ product }: { product: IProduct }) {
   return (
-    <div className="bg-white rounded-lg flex p-5 gap-5">
+    <div className="bg-white rounded-lg border flex p-5 gap-5">
       <div className="h-full w-32 rounded-md overflow-hidden">
         <Image
           src={product?.imageUrls?.[0]}
