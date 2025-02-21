@@ -4,11 +4,15 @@ import ProductBanner from "@/components/modules/products/banner";
 
 const CartPage = () => {
   return (
-    <div className="container mx-auto my-10">
+    <div className="container mx-auto my-10 px-4">
       <ProductBanner title="Cart Page" path="Home - Cart" />
-      <div className="grid grid-cols-12 p-7 items-center justify-center gap-8 my-5">
-        <CartProducts />
-        <Coupon />
+      <div className="grid grid-cols-1 md:grid-cols-12 md:p-7 p-2  justify-center gap-8 my-5">
+        <div className="col-span-8 w-full">
+          <CartProducts />
+        </div>
+        <div className=" md:col-span-4 col-span-8 w-full">
+          <Coupon />
+        </div>
       </div>
     </div>
   );
