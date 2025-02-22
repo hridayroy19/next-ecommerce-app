@@ -11,6 +11,7 @@ import { deleteBrand } from "@/services/Brand";
 import DeleteConfirmationModal from "@/components/ui/core/NEModal/DeleteConfirmationModal";
 import { NETable } from "@/components/ui/core/NEtabil";
 import { IBrand } from "@/types";
+// import TablePagination from "@/components/ui/core/NEtabil/TabilPagination";
 
 const ManageBrands = ({ brands }: { brands: IBrand[] }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -105,6 +106,7 @@ const ManageBrands = ({ brands }: { brands: IBrand[] }) => {
         onOpenChange={setModalOpen}
         onConfirm={handleDeleteConfirm}
       />
+      {/* <TablePagination/> */}
     </div>
   );
 };

@@ -7,7 +7,7 @@ const ManageProductsPage = async () => {
   console.log(data)
   return (
     <div>
-      <ManageProducts products={data}/>
+      <ManageProducts products={data} meta={meta} />
     </div>
   );
 };

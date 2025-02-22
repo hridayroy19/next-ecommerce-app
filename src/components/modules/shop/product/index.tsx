@@ -6,16 +6,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { NETable } from "@/components/ui/core/NEtabil";
-import { IProduct } from "@/types";
+import { IMeta, IProduct } from "@/types";
 import { deleteProduct } from "@/services/Product";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import DiscountModal from "./DiscountModals";
+import TablePagination from "@/components/ui/core/NEtabil/TabilPagination";
 
 // import { toast } from "sonner";
 
-const ManageProducts = ({ products }: { products: IProduct[] }) => {
+const ManageProducts = ({ products,meta }: { products: IProduct[]; meta:IMeta }) => {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
   console.log(selectedIds);
@@ -171,6 +172,7 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
         </div>
       </div>
       <NETable columns={columns} data={products || []} />
+      <TablePagination totalPage={meta?.totalPage} />
     </div>
   );
 };

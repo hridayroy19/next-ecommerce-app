@@ -1,5 +1,5 @@
 "use client";
-import { ICategory } from "@/types";
+import { ICategory, IMeta } from "@/types";
 import CreateCatagoryModal from "./CreateCatagoryModal";
 import { NETable } from "@/components/ui/core/NEtabil";
 import { ColumnDef } from "@tanstack/react-table";
@@ -9,12 +9,14 @@ import { useState } from "react";
 import { deleteCategory } from "@/services/Category";
 import { toast } from "sonner";
 import DeleteConfirmationModal from "@/components/ui/core/NEModal/DeleteConfirmationModal";
+import TablePagination from "@/components/ui/core/NEtabil/TabilPagination";
 
 type TcatagorisProps = {
   catagoris: ICategory[];
+  meta: IMeta;
 };
 
-const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
+const ManageCatagories = ({ catagoris, meta }: TcatagorisProps) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -100,6 +102,7 @@ const ManageCatagories = ({ catagoris }: TcatagorisProps) => {
         <CreateCatagoryModal />
       </div>
       <NETable data={catagoris} columns={columns} />
+      <TablePagination totalPage={meta?.totalPage} />
       <DeleteConfirmationModal
         name={selectedItem}
         isOpen={isModalOpen}

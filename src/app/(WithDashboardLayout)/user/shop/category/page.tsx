@@ -3,11 +3,12 @@ import { GetAllCategory } from "@/services/Category";
 
 const ProductCatagory = async() => {
     
- const {data} = await GetAllCategory()
+ const {data , meta} = await GetAllCategory()
+ console.log(meta)
 
     return (
         <div>
-           <ManageCatagories catagoris={data}/>
+           <ManageCatagories catagoris={data} meta={meta} />
         </div>
     );
 };

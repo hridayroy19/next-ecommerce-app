@@ -1,5 +1,4 @@
 import ManageBrands from "@/components/modules/shop/brand";
-import TabilPagination from "@/components/ui/core/NEtabil/TabilPagination";
 import { getAllBrands } from "@/services/Brand";
 
 
@@ -8,9 +7,7 @@ const ProductBrandPage = async () => {
   return (
     <>
       <ManageBrands brands={data} />
-      <div className=" mt-10">
-      <TabilPagination/>
-      </div>
+
     </>
   );
 };
