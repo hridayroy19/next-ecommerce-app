@@ -1,5 +1,6 @@
 import CartProducts from "@/components/modules/cart/CartProducts";
 import Coupon from "@/components/modules/cart/Coupon";
+import PaymentDetails from "@/components/modules/cart/PaymentDetails";
 import ProductBanner from "@/components/modules/products/banner";
 
 const CartPage = () => {
@@ -12,7 +13,9 @@ const CartPage = () => {
         </div>
         <div className=" md:col-span-4 col-span-8 w-full">
           <Coupon />
+          <PaymentDetails/>
         </div>
+        
       </div>
     </div>
   );

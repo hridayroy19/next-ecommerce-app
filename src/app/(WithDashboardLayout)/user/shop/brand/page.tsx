@@ -6,7 +6,7 @@ const ProductBrandPage = async () => {
   const { data, meta } = await getAllBrands();
   return (
     <>
-      <ManageBrands brands={data} />
+      <ManageBrands brands={data} meta ={meta} />
 
     </>
   );

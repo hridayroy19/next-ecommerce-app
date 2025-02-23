@@ -10,10 +10,11 @@ import { toast } from "sonner";
 import { deleteBrand } from "@/services/Brand";
 import DeleteConfirmationModal from "@/components/ui/core/NEModal/DeleteConfirmationModal";
 import { NETable } from "@/components/ui/core/NEtabil";
-import { IBrand } from "@/types";
+import { IBrand, IMeta } from "@/types";
+import TablePagination from "@/components/ui/core/NEtabil/TabilPagination";
 // import TablePagination from "@/components/ui/core/NEtabil/TabilPagination";
 
-const ManageBrands = ({ brands }: { brands: IBrand[] }) => {
+const ManageBrands = ({ brands , meta }: { brands: IBrand[];meta:IMeta }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -99,6 +100,7 @@ const ManageBrands = ({ brands }: { brands: IBrand[] }) => {
         <CreateBrandModal />
       </div>
       <NETable columns={columns} data={brands || []} />
+      <TablePagination totalPage={meta?.totalPage}/>
 
       <DeleteConfirmationModal
         name={selectedItem}
