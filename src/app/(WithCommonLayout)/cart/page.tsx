@@ -1,3 +1,4 @@
+import Address from "@/components/modules/cart/Address";
 import CartProducts from "@/components/modules/cart/CartProducts";
 import Coupon from "@/components/modules/cart/Coupon";
 import PaymentDetails from "@/components/modules/cart/PaymentDetails";
@@ -13,6 +14,7 @@ const CartPage = () => {
         </div>
         <div className=" md:col-span-4 col-span-8 w-full">
           <Coupon />
+          <Address/>
           <PaymentDetails/>
         </div>
         
