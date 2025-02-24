@@ -1,9 +1,27 @@
 import { Button } from "@/components/ui/button";
-import { IProduct } from "@/types";
+import {
+  Cartproduct,
+  DecrementOrderQuantity,
+  incrementOrderQuantity,
+  removeProduct,
+} from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
 
-export default function CartProductCard({ product }: { product: IProduct }) {
+export default function CartProductCard({ product }: { product: Cartproduct }) {
+  const dispatch = useAppDispatch();
+
+  const handelIncrement = (id: string) => {
+    dispatch(incrementOrderQuantity(id));
+  };
+  const handelDecrement = (id: string) => {
+    dispatch(DecrementOrderQuantity(id));
+  };
+  const handelRemove = (id: string) => {
+    dispatch(removeProduct(id));
+  };
+
   return (
     <div className="bg-white rounded-lg border flex p-5 gap-5">
       <div className="h-full w-32 rounded-md overflow-hidden">
@@ -35,16 +53,28 @@ export default function CartProductCard({ product }: { product: IProduct }) {
           </h2>
           <div className="flex items-center gap-2">
             <p className="text-gray-500 font-semibold">Quantity</p>
-            <Button variant="outline" className="size-8 rounded-sm">
+            <Button
+              onClick={() => handelDecrement(product._id)}
+              variant="outline"
+              className="size-8 rounded-sm"
+            >
               <Minus />
             </Button>
             <p className="font-semibold text-xl p-2">
-              {/* {product?.orderQuantity} */}1
+              {product?.orderQuantity}
             </p>
-            <Button variant="outline" className="size-8 rounded-sm">
+            <Button
+              onClick={() => handelIncrement(product._id)}
+              variant="outline"
+              className="size-8 rounded-sm"
+            >
               <Plus />
             </Button>
-            <Button variant="outline" className="size-8 rounded-sm">
+            <Button
+              onClick={() => handelRemove(product._id)}
+              variant="outline"
+              className="size-8 rounded-sm"
+            >
               <Trash className="text-red-500/50" />
             </Button>
           </div>
