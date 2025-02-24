@@ -54,17 +54,27 @@ const cartSlice = createSlice({
         },
         updateCity: (state, action) => {
             state.city = action.payload;
-          },
-          updateShippingAddress: (state, action) => {
+        },
+        updateShippingAddress: (state, action) => {
             state.shippingAddress = action.payload;
-          },
+        },
     }
 })
 
+// products
 export const orderedProductsSelector = (state: RootState) => {
     return state.cartSlice.products;
 };
 
+export const orderSelect = (state: RootState) => {
+    return {
+        products: state.cartSlice.products.map((product) => ({ product: product._id, quantity: product.orderQuantity })),
+        
+        shippingAddress: `${state.cartSlice.shippingAddress} - ${state.cartSlice.city}`,
+        paymentMethod: "Online",
+    }
+
+}
 // payment 
 export const subTotalSelector = (state: RootState) => {
     return state.cartSlice.products.reduce((acc, product) => {
@@ -77,21 +87,37 @@ export const subTotalSelector = (state: RootState) => {
         }
     }, 0);
 };
-
+export const shippingCostSelector = (state: RootState) => {
+    if (
+        state.cartSlice.city &&
+        state.cartSlice.city === "Dhaka" &&
+        state.cartSlice.products.length > 0
+    ) {
+        return 60;
+    } else if (
+        state.cartSlice.city &&
+        state.cartSlice.city !== "Dhaka" &&
+        state.cartSlice.products.length > 0
+    ) {
+        return 120;
+    } else {
+        return 0;
+    }
+};
 
 //* Address
 
 export const citySelector = (state: RootState) => {
     return state.cartSlice.city;
-  };
-  
-  export const shippingAddressSelector = (state: RootState) => {
+};
+
+export const shippingAddressSelector = (state: RootState) => {
     return state.cartSlice.shippingAddress;
-  };
+};
 
 
 
 
 
-export const { addProduct, incrementOrderQuantity, DecrementOrderQuantity, removeProduct,updateCity , updateShippingAddress  } = cartSlice.actions;
+export const { addProduct, incrementOrderQuantity, DecrementOrderQuantity, removeProduct, updateCity, updateShippingAddress } = cartSlice.actions;
 export default cartSlice.reducer;
