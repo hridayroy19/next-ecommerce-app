@@ -1,23 +1,72 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/UserContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
 import {
+  citySelector,
+  clearCart,
   grandTotalSelector,
+  orderedProductsSelector,
   orderSelect,
+  shippingAddressSelector,
   shippingCostSelector,
   subTotalSelector,
 } from "@/redux/features/cartSlice";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { createOrder } from "@/services/cart";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function PaymentDetails() {
   const subtotal = useAppSelector(subTotalSelector);
   const shipingCost = useAppSelector(shippingCostSelector);
   const order = useAppSelector(orderSelect);
   const grandTOtal = useAppSelector(grandTotalSelector);
+  const city = useAppSelector(citySelector);
+  const shippingAddress = useAppSelector(shippingAddressSelector);
+  const cartProducts = useAppSelector(orderedProductsSelector);
 
-  const handelOrder = () => {
-    console.log(order);
+
+  const { user } = useUser();
+  // console.log(user, "user");
+  const router = useRouter();
+  const dispatch = useAppDispatch()
+
+  const handleOrder = async () => {
+    const orderLoading = toast.loading("Order is being placed");
+    try {
+      if (!user) {
+        router.push("/login");
+        throw new Error("Please login first.");
+      }
+
+      if (!city) {
+        throw new Error("City is missing");
+      }
+      if (!shippingAddress) {
+        throw new Error("Shipping address is missing");
+      }
+
+      if (cartProducts.length === 0) {
+        throw new Error("Cart is empty, what are you trying to order ??");
+      }
+
+      const res = await createOrder(order);
+      console.log(res, "resssss");
+
+      if (res.success) {
+        toast.success(res.message, { id: orderLoading });
+        dispatch(clearCart())
+        router.push(res.data.paymentUrl);
+      }
+
+      if (!res.success) {
+        toast.error(res.message, { id: orderLoading });
+      }
+    } catch (error: any) {
+      toast.error(error.message, { id: orderLoading });
+    }
   };
 
   return (
@@ -42,7 +91,7 @@ export default function PaymentDetails() {
         <p className="font-semibold">{currencyFormatter(grandTOtal)} </p>
       </div>
       <Button
-        onClick={handelOrder}
+        onClick={handleOrder}
         className="w-full text-xl font-semibold py-5"
       >
         Order Now
