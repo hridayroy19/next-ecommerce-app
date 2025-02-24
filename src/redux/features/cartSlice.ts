@@ -9,10 +9,14 @@ export interface Cartproduct extends IProduct {
 
 interface InitialState {
     products: Cartproduct[]
+    city: string;
+    shippingAddress: string;
 }
 
 const initialState: InitialState = {
-    products: []
+    products: [],
+    city: "",
+    shippingAddress: ""
 }
 
 const cartSlice = createSlice({
@@ -26,13 +30,11 @@ const cartSlice = createSlice({
                 productToAdd.orderQuantity += 1;
                 return
             }
-
             state.products.push({ ...action.payload, orderQuantity: 1 })
         },
 
         incrementOrderQuantity: (state, action) => {
             const productToIncrement = state.products.find((product) => product._id === action.payload)
-
             if (productToIncrement) {
                 productToIncrement.orderQuantity += 1
                 return
@@ -48,9 +50,14 @@ const cartSlice = createSlice({
             }
         },
         removeProduct: (state, action) => {
-
             state.products = state.products.filter((product) => product._id !== action.payload)
-        }
+        },
+        updateCity: (state, action) => {
+            state.city = action.payload;
+          },
+          updateShippingAddress: (state, action) => {
+            state.shippingAddress = action.payload;
+          },
     }
 })
 
@@ -72,5 +79,19 @@ export const subTotalSelector = (state: RootState) => {
 };
 
 
-export const { addProduct, incrementOrderQuantity, DecrementOrderQuantity, removeProduct } = cartSlice.actions;
+//* Address
+
+export const citySelector = (state: RootState) => {
+    return state.cartSlice.city;
+  };
+  
+  export const shippingAddressSelector = (state: RootState) => {
+    return state.cartSlice.shippingAddress;
+  };
+
+
+
+
+
+export const { addProduct, incrementOrderQuantity, DecrementOrderQuantity, removeProduct,updateCity , updateShippingAddress  } = cartSlice.actions;
 export default cartSlice.reducer;
