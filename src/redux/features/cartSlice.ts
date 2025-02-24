@@ -69,7 +69,7 @@ export const orderedProductsSelector = (state: RootState) => {
 export const orderSelect = (state: RootState) => {
     return {
         products: state.cartSlice.products.map((product) => ({ product: product._id, quantity: product.orderQuantity })),
-        
+
         shippingAddress: `${state.cartSlice.shippingAddress} - ${state.cartSlice.city}`,
         paymentMethod: "Online",
     }
@@ -105,6 +105,12 @@ export const shippingCostSelector = (state: RootState) => {
     }
 };
 
+ export const grandTotalSelector = (state: RootState) => {
+    const subTotal = subTotalSelector(state);
+    const shippingCost = shippingCostSelector(state);
+  
+    return subTotal + shippingCost;
+  };
 //* Address
 
 export const citySelector = (state: RootState) => {
