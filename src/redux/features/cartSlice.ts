@@ -62,29 +62,30 @@ const cartSlice = createSlice({
             state.products = [];
             state.city = "";
             state.shippingAddress = "";
-          },
+        },
     }
 })
 
 // products
 export const orderedProductsSelector = (state: RootState) => {
-    return state.cartSlice.products;
+    return state.cart.products;
 };
 
 export const orderSelect = (state: RootState) => {
     return {
-        products: state.cartSlice.products.map((product) => ({
-            product: product._id, quantity: product.orderQuantity,
-            color: "White",
+        products: state.cart.products.map((product) => ({
+            product: product._id,
+            quantity: product.orderQuantity,
+            color: "White"
         })),
 
-        shippingAddress: `${state.cartSlice.shippingAddress} - ${state.cartSlice.city}`,
+        shippingAddress: `${state.cart.shippingAddress} - ${state.cart.city}`,
         paymentMethod: "Online",
     }
 }
 // payment 
 export const subTotalSelector = (state: RootState) => {
-    return state.cartSlice.products.reduce((acc, product) => {
+    return state.cart.products.reduce((acc, product) => {
         if (product.offerPrice) {
             // console.log(product.offerPrice);
             return acc + product.offerPrice * product.orderQuantity;
@@ -96,15 +97,15 @@ export const subTotalSelector = (state: RootState) => {
 };
 export const shippingCostSelector = (state: RootState) => {
     if (
-        state.cartSlice.city &&
-        state.cartSlice.city === "Dhaka" &&
-        state.cartSlice.products.length > 0
+        state.cart.city &&
+        state.cart.city === "Dhaka" &&
+        state.cart.products.length > 0
     ) {
         return 60;
     } else if (
-        state.cartSlice.city &&
-        state.cartSlice.city !== "Dhaka" &&
-        state.cartSlice.products.length > 0
+        state.cart.city &&
+        state.cart.city !== "Dhaka" &&
+        state.cart.products.length > 0
     ) {
         return 120;
     } else {
@@ -121,16 +122,16 @@ export const grandTotalSelector = (state: RootState) => {
 //* Address
 
 export const citySelector = (state: RootState) => {
-    return state.cartSlice.city;
+    return state.cart.city;
 };
 
 export const shippingAddressSelector = (state: RootState) => {
-    return state.cartSlice.shippingAddress;
+    return state.cart.shippingAddress;
 };
 
 
 
 
 
-export const { addProduct, incrementOrderQuantity, DecrementOrderQuantity, removeProduct, updateCity, updateShippingAddress,clearCart } = cartSlice.actions;
+export const { addProduct, incrementOrderQuantity, DecrementOrderQuantity, removeProduct, updateCity, updateShippingAddress, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

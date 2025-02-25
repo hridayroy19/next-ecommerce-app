@@ -33,13 +33,11 @@ const LoginForm = () => {
     formState: { isSubmitting },
   } = form;
 
-
-
   const handleReCaptcha = async (value: string | null) => {
     try {
       const res = await reCaptchaTokenVerification(value!);
       console.log(res);
-      
+
       if (res?.success) {
         setReCaptchaStatus(true);
       }
@@ -58,7 +56,7 @@ const LoginForm = () => {
         if (redirect) {
           router.push(redirect);
         } else {
-          router.push("/profile");
+          router.push("/");
         }
       } else {
         toast.error(res?.message);
@@ -111,10 +109,17 @@ const LoginForm = () => {
           />
 
           <div className=" w-full  mt-4 justify-center flex">
-            <ReCAPTCHA onChange={handleReCaptcha} sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY!}`}  />
+            <ReCAPTCHA
+              onChange={handleReCaptcha}
+              sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY!}`}
+            />
           </div>
 
-          <Button disabled={reCaptchaStatus? false : true} className="mt-5 w-full" type="submit">
+          <Button
+            disabled={reCaptchaStatus ? false : true}
+            className="mt-5 w-full"
+            type="submit"
+          >
             {isSubmitting ? "Login...." : "Login"}
           </Button>
         </form>
