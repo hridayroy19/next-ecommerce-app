@@ -1,8 +1,12 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { CheckCircleIcon } from "lucide-react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const SuccessPage = () => {
+  const {tran_id} = useParams()
+  console.log(tran_id)
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-6 text-center">
@@ -14,6 +18,7 @@ const SuccessPage = () => {
           Thank you for your purchase. Your transaction has been completed
           successfully.
         </p>
+        <h1 className="text-teal-600 font-medium ">Transection Id: {tran_id}</h1>
         <div className="mt-6">
           <Link href="/products" legacyBehavior>
             <Button>Continue Shopping</Button>
