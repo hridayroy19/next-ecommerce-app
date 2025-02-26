@@ -36,7 +36,7 @@ const RegisterForm = () => {
     try {
       const res = await registerUser(data);
       setIsLoading(true);
-      // console.log(res);
+      console.log(res);
 
       if (res?.success) {
         toast.success(res?.message);

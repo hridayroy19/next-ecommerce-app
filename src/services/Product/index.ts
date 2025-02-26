@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
+import { getValidToken } from "@/lib/verifyToken";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
@@ -41,12 +42,13 @@ export const getSingleProduct = async (productId: string) => {
 
 // add product
 export const addProduct = async (productData: FormData): Promise<any> => {
+  const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/product`, {
       method: "POST",
       body: productData,
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
+        Authorization: token,
       },
     });
     revalidateTag("PRODUCT");
@@ -61,6 +63,7 @@ export const updateProduct = async (
   productData: FormData,
   productId: string
 ): Promise<any> => {
+  const token = await getValidToken();
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`,
@@ -68,7 +71,7 @@ export const updateProduct = async (
         method: "PATCH",
         body: productData,
         headers: {
-          Authorization: (await cookies()).get("accessToken")!.value,
+          Authorization: token,
         },
       }
     );
@@ -82,13 +85,14 @@ export const updateProduct = async (
 
 
 export const deleteProduct = async (productId: string): Promise<any> => {
+  const token = await getValidToken();
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`,
       {
         method: "DELETE",
         headers: {
-          Authorization: (await cookies()).get("accessToken")!.value,
+          Authorization: token,
         },
       }
     );
