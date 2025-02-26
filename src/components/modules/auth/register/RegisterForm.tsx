@@ -16,6 +16,7 @@ import Image from "next/image";
 import { registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useUser } from "@/context/UserContext";
 
 const RegisterForm = () => {
   const form = useForm({
@@ -30,11 +31,12 @@ const RegisterForm = () => {
   const password = form.watch("password");
   const passwordConfirm = form.watch("passwordConfirm");
   // console.log(password, passwordConfirm);
-
+  const { setIsLoading } = useUser();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await registerUser(data);
-      console.log(res);
+      setIsLoading(true);
+      // console.log(res);
 
       if (res?.success) {
         toast.success(res?.message);
