@@ -14,8 +14,8 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
   );
   console.log(selectedColor);
   return (
-    <div className="container mx-auto my-10 px-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6  p-6 rounded-md shadow-md bg-white">
+    <div className="container mx-auto mt-10 px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6  p-6 rounded-md  bg-white">
         {/* Image Section */}
         <div className="border p-2">
           <Image

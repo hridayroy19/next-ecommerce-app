@@ -19,7 +19,7 @@ const Footer = () => {
     { href: "#", icon: X },
   ];
   return (
-    <footer className="bg-white border-t border-gray-200 py-24">
+    <footer className="bg-[#e2e0e0] border-t border-gray-200 py-14">
       <div className="max-w-6xl mx-auto px-4 text-center">
         <div className="flex flex-col items-center mb-6">
           <div className="flex items-center space-x-2">

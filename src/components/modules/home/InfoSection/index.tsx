@@ -25,12 +25,12 @@ const InfoSection = () => {
   ];
 
   return (
-    <div className="bg-gray-100 py-12 px-4 md:px-8 lg:px-16">
+    <div className=" py-12 px-4 md:px-8 lg:px-16">
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {infoCards.map((card, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center"
+            className="bg-[#f0efef] p-6 rounded-lg shadow-md flex flex-col items-center text-center"
           >
             <Image
               src={card.image}
