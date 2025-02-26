@@ -2,6 +2,7 @@ import InfoSection from "@/components/modules/home/InfoSection";
 import ProductBanner from "@/components/modules/products/banner";
 import ProductDescription from "@/components/modules/products/productDescription";
 import ProductDetails from "@/components/modules/products/productDetails";
+import ReviewsRatings from "@/components/modules/products/reviewsRatings";
 import { getSingleProduct } from "@/services/Product";
 
 const ProductDetailsPage = async ({
@@ -21,6 +22,7 @@ const ProductDetailsPage = async ({
       />
       <ProductDetails product={product} />
       <ProductDescription />
+      <ReviewsRatings/>
       <InfoSection/>
     </div>
   );
