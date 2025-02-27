@@ -1,4 +1,5 @@
 import Category from "@/components/modules/home/Category";
+import ExclusivSection from "@/components/modules/home/Exclusive";
 import FeaturedProducts from "@/components/modules/home/FeaturedProducts";
 import FlashSale from "@/components/modules/home/FlashSale";
 import HeroSection from "@/components/modules/home/Herosection";
@@ -12,6 +13,7 @@ const Homepage = () => {
       <FeaturedProducts />
       <FlashSale/>
       <TopBrands/>
+      <ExclusivSection/>
     </div>
   );
 };
