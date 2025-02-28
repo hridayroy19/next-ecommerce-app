@@ -5,9 +5,22 @@ import { GetAllCategory } from "@/services/Category";
 import { getAllProducts } from "@/services/Product";
 import { ICategory } from "@/types";
 
-const AllProductsPage = async () => {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+
+
+const AllProductsPage = async ({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) => {
+
+  const query = await searchParams;
+  console.log(query)
   const { data: categories } = await GetAllCategory();
-  const { data: products } = await getAllProducts();
+  const { data: products } = await getAllProducts(undefined, undefined, query);
+
+
   return (
     <div className="my-10 container mx-auto">
       <ProductBanner title="All Products" path="Home - Products" />
