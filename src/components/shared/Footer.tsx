@@ -8,7 +8,6 @@ const Footer = () => {
     { href: "/shop", label: "Shop" },
     { href: "/products", label: "App Products" },
     { href: "/about", label: "About Us" },
-    { href: "/testimonial", label: "Testimonial" },
     { href: "/blogs", label: "Blogs" },
     { href: "/contact", label: "Contact Us" },
   ];
